@@ -1,22 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { useState } from 'react'
+import Papillon from './Components/Papillon'
 
 function App() {
+  const [favoriteAdvice, setFavoriteAdvice] = useState([])
+
+  const addFavoriteAdvice = idAdvice => idAdvice  || !favoriteAdvice.includes(idAdvice)
+      ? setFavoriteAdvice([idAdvice, ...favoriteAdvice])
+      : false
+
+  const removeFavoriteAdvice = (idAdvice) => {
+    if(!idAdvice) return false
+    setFavoriteAdvice(favoriteAdvice.splice(favoriteAdvice.findIndex(idAdvice),1))
+  }
+
+  const getFavoriteAdvice = (index) => {
+    if(!index) return favoriteAdvice
+    return (favoriteAdvice.length - 1) >= index 
+      ? favoriteAdvice[index]
+      : false
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Hello le monde
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Papillon 
+          baseButterfly={42} 
+          aFA={addFavoriteAdvice} 
+          rFA={removeFavoriteAdvice} 
+          gFA={getFavoriteAdvice} 
+          favoriteAdvice={favoriteAdvice}
+        />
       </header>
     </div>
   );
